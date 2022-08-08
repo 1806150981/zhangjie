@@ -1,13 +1,19 @@
 # zhangjie
 给我张杰小宝贝创建的仓库
+
+
+···
 package com.icss.demo.service;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,28 +22,94 @@ import java.util.List;
 
 public class OpenCsv {
 
+    private final Integer D_POSITION = 3;
+    private final Integer E_POSITION = 4;
+    private final Integer F_POSITION = 5;
+    private final String OUTPUT_PATH = "E:\\csv";
+
     public static void main(String[] args) {
         System.out.println();
         OpenCsv openCsv = new OpenCsv();
         List<String[]> csv = openCsv.getCsv(",", "E:\\csv\\INPUT.csv");
         List<String[]> outCsv = new ArrayList<>();
-        csv.forEach(item -> {
-            switch (item[0]) {
-                case "A":
-                    String[] ss = new String[10];
-                    ss[0] = "A";
-                    //计算总金额
+        //输出系统时间
+        String[] ssT = new String[2];
+        ssT[0] = "H";
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        ssT[1] = simpleDateFormat.format(date);
+        outCsv.add(ssT);
+        //A金额
+        BigDecimal totalMoneyA = new BigDecimal(0);
+        //B金额
+        BigDecimal totalMoneyB = new BigDecimal(0);
+        //C金额
+        BigDecimal totalMoneyC = new BigDecimal(0);
 
-                    break;
-                case "B":
-                    break;
-                case "C":
-                    break;
-                default:
-                    break;
+        for (String[] item : csv) {
+            if ("A".equals(item[0])) {
+                //计算总金额 从DEF开始相加 使用bigdecimal
+                //D
+                BigDecimal moneyD = new BigDecimal(item[openCsv.D_POSITION]);
+                //E
+                BigDecimal moneyE = new BigDecimal(item[openCsv.E_POSITION]);
+                //F
+                BigDecimal moneyF = new BigDecimal(item[openCsv.F_POSITION]);
+                //总金额
+                totalMoneyA = totalMoneyA.add(moneyD).add(moneyE).add(moneyF);
+
+            } else if ("B".equals(item[0])) {
+                //计算总金额 从DEF开始相加 使用bigdecimal
+                //D
+                BigDecimal moneyD = new BigDecimal(item[openCsv.D_POSITION]);
+                //E
+                BigDecimal moneyE = new BigDecimal(item[openCsv.E_POSITION]);
+                //总金额
+                totalMoneyB = totalMoneyB.add(moneyD).add(moneyE);
+            } else if ("C".equals(item[0])) {
+                //计算总金额 从DEF开始相加 使用bigdecimal
+                //D
+                BigDecimal moneyD = new BigDecimal(item[openCsv.D_POSITION]);
+                //总金额
+                totalMoneyC = totalMoneyC.add(moneyD);
             }
-        });
+        }
+
+        //录入A
+        String[] ssA = new String[2];
+        ssA[0] = "A";
+        ssA[1] = totalMoneyA.toString();
+        outCsv.add(ssA);
+        //录入B
+        String[] ssB = new String[2];
+        ssB[0] = "B";
+        ssB[1] = totalMoneyB.toString();
+        outCsv.add(ssB);
+        //录入C
+        String[] ssC = new String[2];
+        ssC[0] = "C";
+        ssC[1] = totalMoneyC.toString();
+        outCsv.add(ssC);
+
+
+        //输入总金额
+        String[] ssL = new String[2];
+        ssL[0] = "L";
+        StringBuilder totalMoney = new StringBuilder(totalMoneyA.add(totalMoneyB).add(totalMoneyC).toString());
+        if (totalMoney.length() < 11) {
+            for (int i = 0; i <= (11 - totalMoney.length()); i++) {
+                totalMoney.insert(0, "0");
+            }
+        }
+        totalMoney.insert(0, "`");
+        totalMoney.append("`");
+        ssL[1] = totalMoney.toString();
+        outCsv.add(ssL);
+
+        //输出文件
+        openCsv.createCSVFile(outCsv, openCsv.OUTPUT_PATH, "OUTPUT");
     }
+
 
     public List<String[]> getCsv(String delimiter, String path) {
 
@@ -127,7 +199,7 @@ public class OpenCsv {
         String result = str;
         String[] strQuota = {"~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "`", ";", "'", ",", ".", "/", ":", "/,", "<", ">", "?"};
         for (String s : strQuota) {
-            if (result.contains(s)) {
+            if (result.indexOf(s) < 0) {
                 result = result.replace(s, "");
             }
         }
@@ -136,3 +208,5 @@ public class OpenCsv {
 
 
 }
+
+···
