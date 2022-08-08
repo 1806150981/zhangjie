@@ -96,7 +96,9 @@ public class OpenCsv {
         String[] ssL = new String[2];
         ssL[0] = "L";
         StringBuilder totalMoney = new StringBuilder(totalMoneyA.add(totalMoneyB).add(totalMoneyC).toString());
-        if (totalMoney.length() < 11) {
+
+        System.out.println(totalMoney.length());
+        if (totalMoney.length() < 9) {
             for (int i = 0; i <= (11 - totalMoney.length()); i++) {
                 totalMoney.insert(0, "0");
             }
@@ -106,6 +108,10 @@ public class OpenCsv {
         ssL[1] = totalMoney.toString();
         outCsv.add(ssL);
 
+        String[] ssL1 = new String[2];
+        ssL1[0] = "L1";
+        ssL1[1] = csv.size() + "";
+        outCsv.add(ssL1);
         //输出文件
         openCsv.createCSVFile(outCsv, openCsv.OUTPUT_PATH, "OUTPUT");
     }
@@ -137,7 +143,7 @@ public class OpenCsv {
      * @return
      */
     public File createCSVFile(List<String[]> exportData, String outPutPath, String fileName) {
-        File csvFile = null;
+        File csvFile = new File(outPutPath + "\\" + fileName + ".csv");
         BufferedWriter csvFileOutputStream = null;
         try {
             File file = new File(outPutPath);
@@ -149,7 +155,10 @@ public class OpenCsv {
                 }
             }
             //定义文件名格式并创建
-            csvFile = File.createTempFile(fileName, ".csv", new File(outPutPath));
+            if (!csvFile.exists()) {
+                boolean newFile = csvFile.createNewFile();
+                System.out.println(newFile);
+            }
             csvFileOutputStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), StandardCharsets.UTF_8), 1024);
             for (String[] exportDatum : exportData) {
                 writeRow(exportDatum, csvFileOutputStream);
@@ -208,5 +217,6 @@ public class OpenCsv {
 
 
 }
+
 
 ···
