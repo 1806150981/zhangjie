@@ -176,7 +176,22 @@ public class OpenCsv {
         String[] ssL1 = new String[2];
         ssL1[0] = "L1";
         //最开始读取的INPUT文件集合 大小即为 数量
-        ssL1[1] = csv.size() + "";
+        /**
+         * 补0
+         * */
+
+        StringBuilder size = new StringBuilder(csv.size() + "");
+        if (size.length() < 9) {
+            int sizeValue = 9 - size.length();
+            for (int i = 0; i < sizeValue; i++) {
+                size.insert(0, "0");
+            }
+        }
+
+        size.append("`");
+        size.insert(0, "`");
+
+        ssL1[1] = size.toString();
         outCsv.add(ssL1);
         //输出文件到电脑硬盘
         openCsv.createCSVFile(outCsv, openCsv.OUTPUT_PATH, "OUTPUT");
@@ -268,31 +283,12 @@ public class OpenCsv {
         List<String> strings = Arrays.asList(row);
         int i = 0;
         for (String data : strings) {
-            //判断有无特殊字符 如果有就替换掉
-            csvWriter.write(DelQuota(data));
             //因为csv 是用‘，’分割单元格 所以每写一个都需要 加一个 ，号
             if (i != strings.size() - 1) {
                 csvWriter.write(",");
             }
             i++;
         }
-    }
-
-    /**
-     * 剔除特殊字符
-     *
-     * @param str 数据
-     */
-    public String DelQuota(String str) {
-        String result = str;
-        String[] strQuota = {"~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "`", ";", "'", ",", ".", "/", ":", "/,", "<", ">", "?"};
-        for (String s : strQuota) {
-            if (result.indexOf(s) < 0) {
-                //存在特殊字符就替换
-                result = result.replace(s, "");
-            }
-        }
-        return result;
     }
 
 
