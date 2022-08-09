@@ -283,6 +283,7 @@ public class OpenCsv {
         List<String> strings = Arrays.asList(row);
         int i = 0;
         for (String data : strings) {
+            csvWriter.write(data);
             //因为csv 是用‘，’分割单元格 所以每写一个都需要 加一个 ，号
             if (i != strings.size() - 1) {
                 csvWriter.write(",");
