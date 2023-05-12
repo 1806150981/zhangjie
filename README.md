@@ -96,11 +96,13 @@ public class BILTEXT501002 extends ChMBNomalBase{
 				BillLearinigDiscountMsg msg = new BillLearinigDiscountMsg();
 				
 				List<BillLearinigDiscountCsv> billLearinigDiscountCsvNew = new ArrayList();
-	for(BillLearinigDiscountCsv item:billLearinigDiscountCsvList){
-	//写逻辑
-	if(xxx){
-	}else{
-	}
+	   			String keyBillGroupIdAndServiceId = null;
+			for(BillLearinigDiscountCsv item:billLearinigDiscountCsvList){
+				if(Renewmessage(item,billLearinigDiscountCsvNew)){
+					keyBillGroupIdAndServiceId = 
+				}
+				}else{
+				}
 	
 	}
 
@@ -119,13 +121,14 @@ public class BILTEXT501002 extends ChMBNomalBase{
 	public boolean Renewmessage(BillLearinigDiscountCsv item,List<BillLearinigDiscountCsv> billLearinigDiscountCsvNew) {
 	
 		for(BillLearinigDiscountCsv billLearinigDiscountCsv : billLearinigDiscountCsvNew) {
-			if(billLearinigDiscountCsv.equals(item.getBillGroupId())&&billLearinigDiscountCsv.equals(item.getServiceId())) {
+			if(billLearinigDiscountCsv.getBillGroupId().equals(item.getBillGroupId())&&billLearinigDiscountCsv.getServiceId().equals(item.getServiceId())) {
 				return true;
 			}else {
 				return false;
 			}
 		}
-		return ??
+		return false;
+	
 
 	}
 }
