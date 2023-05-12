@@ -96,6 +96,7 @@ public class BILTEXT501002 extends ChMBNomalBase{
 				BillLearinigDiscountMsg msg = new BillLearinigDiscountMsg();
 				
 				List<BillLearinigDiscountCsv> billLearinigDiscountCsvNew = new ArrayList();
+				//我的想法是：如果返回true我就更新，但是我的有东西先把我合计后的接受一下，然后再更新进去，对吧
 	   			String keyBillGroupIdAndServiceId = null;
 			for(BillLearinigDiscountCsv item:billLearinigDiscountCsvList){
 				if(Renewmessage(item,billLearinigDiscountCsvNew)){
