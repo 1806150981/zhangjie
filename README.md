@@ -117,7 +117,16 @@ public class BILTEXT501002 extends ChMBNomalBase{
 		return outCsv;
 	}
 	public boolean Renewmessage(BillLearinigDiscountCsv item,List<BillLearinigDiscountCsv> billLearinigDiscountCsvNew) {
-		return 
+	
+		for(BillLearinigDiscountCsv billLearinigDiscountCsv : billLearinigDiscountCsvNew) {
+			if(billLearinigDiscountCsv.equals(item.getBillGroupId())&&billLearinigDiscountCsv.equals(item.getServiceId())) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+		return ??
+
 	}
 }
 	
