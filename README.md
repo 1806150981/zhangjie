@@ -1,4 +1,4 @@
-
+```java
 
 public class BILTEXT501002 extends ChMBNomalBase{
 
@@ -100,12 +100,32 @@ public class BILTEXT501002 extends ChMBNomalBase{
 	   			String keyBillGroupIdAndServiceId = null;
 			for(BillLearinigDiscountCsv item:billLearinigDiscountCsvList){
 				if(Renewmessage(item,billLearinigDiscountCsvNew)){
-					keyBillGroupIdAndServiceId = 
-				}
+					//更新集合
+					//遍历billLearinigDiscountCsvNew
+					for(int i = 0 ; i<billLearinigDiscountCsvNew.size();i++){
+							BillLearinigDiscountCsv itemCsv = billLearinigDiscountCsvNew.get(i);
+							if(itemCsv.getBillGroupId().equals(item.getBillGroupId())&&itemCsv.getServiceId().equals(item.getServiceId())){
+								//此时的item为需要更新的数据 此时的itemCsv为老旧数据
+								BillLearinigDiscountCsv oldCsv = item;
+								BillLearinigDiscountCsv newCsv = itemCsv;
+								//新资产
+								BigDecimal newMoney = new BigDecimal(newCsv.getMoney);
+								//旧资产
+								BigDecimal oldMoney = new BigDecimal(oldCsv.getMoney);
+								//相加
+								BigDecimal total = oldMoney.add(newMoney);
+								//存入
+								newCsv.setMoney(total.toString)
+								//将修改完的对象替换旧对象
+								billLearinigDiscountCsvNew.set(i, newCsv)
+							}
+						}
 				}else{
+				//没有匹配的 直接存入
+				billLearinigDiscountCsvNew.add(item)
+				
 				}
-	
-	}
+			}
 
 			
 			
@@ -133,6 +153,6 @@ public class BILTEXT501002 extends ChMBNomalBase{
 
 	}
 }
-	
+```
 	
 	
