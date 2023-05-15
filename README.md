@@ -99,7 +99,7 @@ public class BILTEXT501002 extends ChMBNomalBase {
             List<BillLearinigDiscountCsv> billLearinigDiscountCsvNew = new ArrayList();
             //我的想法是：如果返回true我就更新，但是我的有东西先把我合计后的接受一下，然后再更新进去，对吧
             String keyBillGroupIdAndServiceId = null;
-            for (BillLearinigDiscountCsv item : billLearinigDiscountCsvList) {
+            for (BillLearinigDiscountCsv itemCsv : billLearinigDiscountCsvList) {
                 if (Renewmessage(item, billLearinigDiscountCsvNew)) {
                     //更新集合
                     //遍历billLearinigDiscountCsvNew
@@ -123,7 +123,7 @@ public class BILTEXT501002 extends ChMBNomalBase {
                     }
                 } else {
                     //没有匹配的 直接存入
-                    billLearinigDiscountCsvNew.add(item);
+                    billLearinigDiscountCsvNew.add(itemCsv);
 
                 }
             }
