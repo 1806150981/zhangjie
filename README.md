@@ -122,11 +122,12 @@ public class BILTEXT501002 extends ChMBNomalBase {
                         newBillLearinigDiscountCsv.setBillLimitAmt(totalBillLimitAmt.toString());
                         //将修改完的对象替换旧对象
                         billLearinigDiscountCsvNew.set(i, newBillLearinigDiscountCsv);
+                        break;
+                    }else{
+                        //没有匹配的 直接存入
+                        billLearinigDiscountCsvNew.add(item);
                     }
                 }
-            }else{
-                //没有匹配的 直接存入
-		billLearinigDiscountCsvNew.add(item);
             }
 
 
